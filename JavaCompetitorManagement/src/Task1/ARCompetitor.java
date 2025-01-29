@@ -41,10 +41,10 @@ public class ARCompetitor {
 		return 5;
 	}
 	public String getFullDetails() {
-		return
+		return "Competitor number " + compID + ", name " + name + ", country" + country + ".\n" +name.getFirstName() + " is a " + level +" aged"+age+ " and has an overall score of " + getOverallScore() + ".";
 	}
 	public String getShortDetails() {
-		return "CN "+compID+"("+name.getInitials()+") has overall score 5";
+		return "CN "+compID+"("+name.getInitials()+") has overall score "+getOverallScore();
 	}
     @Override
     public String toString() {
