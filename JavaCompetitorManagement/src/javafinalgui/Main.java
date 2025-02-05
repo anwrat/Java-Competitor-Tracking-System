@@ -58,6 +58,10 @@ public class Main extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(btnNewButton);
+				currentFrame.setVisible(false); // Hide current frame
+				UserLoginPage u=new UserLoginPage();
+				u.setVisible(true);
 			}
 		});
 		btnNewButton.setBounds(260, 159, 204, 31);
@@ -68,7 +72,7 @@ public class Main extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(btnAdminLogin);
 		        currentFrame.setVisible(false); // Hide current frame
-				Admin a=new Admin();
+				AdminLoginPage a=new AdminLoginPage();
 				a.setVisible(true);
 			}
 		});
