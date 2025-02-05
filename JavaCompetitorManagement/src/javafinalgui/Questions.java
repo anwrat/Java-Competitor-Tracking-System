@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.table.DefaultTableModel;
@@ -61,55 +62,7 @@ public class Questions {
         }
     }
     //For Updating Questions
-    public void updatequestions(int id) {
-    	String level,category;
-		while(true) {
-			System.out.println("1.Beginner\n2.Intermediate\n3.Advanced");
-			System.out.println("Choose a level(1/2/3):");
-			level=obj.next();
-			if(level.equals("1")||level.equals("2")||level.equals("3")) {
-				if (level.equals("1")) {
-				    level = "Beginner";
-				} else if (level.equals("2")) {
-				    level = "Intermediate";
-				} else if (level.equals("3")) {
-				    level = "Advanced";
-				}
-				break;
-			}
-			else {
-				System.out.println("Invalid level choice. Please choose again");
-			}
-		}
-		while(true) {
-			System.out.println("1.Sports\n2.History\n3.Java");
-			System.out.println("Choose a category(1/2/3):");
-			category=obj.next();
-			if(category.equals("1")||category.equals("2")||category.equals("3")) {
-				if (category.equals("1")) {
-				    category = "Sports";
-				} else if (category.equals("2")) {
-				    category = "History";
-				} else if (category.equals("3")) {
-				    category = "Java";
-				}
-				break;
-			}
-			else {
-				System.out.println("Invalid level choice. Please choose again");
-			}
-		}
-    	System.out.println("Enter the question: ");
-    	obj.nextLine();
-    	String q=obj.nextLine();
-    	System.out.println("Enter option A: ");
-    	String o1=obj.nextLine();
-    	System.out.println("Enter option B: ");
-    	String o2=obj.nextLine();
-    	System.out.println("Enter option C: ");
-    	String o3=obj.nextLine();
-    	System.out.println("Enter the answer: ");
-    	String a=obj.nextLine();
+    public static void updatequestions(int id,String q,String o1,String o2,String o3,String a,String level,String category) {
     	String query="Update questions SET Question=?,A=?,B=?,C=?,Answer=?,Level=?,category=? where QuestionID=?";
         try {
             // make a connection
@@ -124,7 +77,6 @@ public class Questions {
             pstm.setString(7, category);
             pstm.setInt(8,id);
             pstm.executeUpdate();
-            System.out.println("Updated question successfully!!");
             pstm.close();
             conn.close();
         }
@@ -132,6 +84,39 @@ public class Questions {
             System.out.println(e);
             e.printStackTrace();
         }
+    }
+    //For getting original values of a question
+    public ArrayList<String> getqndetails(int id) {
+    	String getquery="select * from questions where QuestionID=?";
+    	try {
+    		Connection conn = DriverManager.getConnection(durl,username,password);
+            PreparedStatement pstm1=conn.prepareStatement(getquery);//For getting original values
+            ResultSet rs=pstm1.executeQuery();
+            ArrayList<String> qns=new ArrayList<String>();
+            while(rs.next()) {
+            	String q=rs.getString("Question");
+            	String a=rs.getString("Answer");
+            	String c=rs.getString("category");
+            	String l=rs.getString("level");
+            	String o1=rs.getString("A");
+            	String o2=rs.getString("B");
+            	String o3=rs.getString("C");
+            	qns.add(q);
+            	qns.add(o1);
+            	qns.add(o2);
+            	qns.add(o3);
+            	qns.add(a);
+            	qns.add(l);
+            	qns.add(c);
+            }
+            rs.close();
+            pstm1.close();
+            return qns;
+    	}catch(SQLException e) {
+		  System.out.println(e);
+          e.printStackTrace();
+          return null;
+    	}
     }
     //For viewing questions by level
     public static void viewbylevel(DefaultTableModel m,String level) {

@@ -114,6 +114,11 @@ public class AdminDashboard extends JFrame {
 		contentPane.add(btnDeleteQuestions);
 		
 		JButton btnUpdateQuestions = new JButton("Update Questions");
+		btnUpdateQuestions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnUpdateQuestions.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnUpdateQuestions.setBackground(new Color(0, 128, 0));
 		btnUpdateQuestions.setBounds(52, 272, 188, 34);
@@ -181,21 +186,26 @@ public class AdminDashboard extends JFrame {
         JButton btnSave = new JButton("Save");
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String level = cmbLevel.getSelectedItem().toString();
-                String question = txtQuestion.getText();
-                String option1 = txtOption1.getText();
-                String option2 = txtOption2.getText();
-                String option3 = txtOption3.getText();
-                String right = txtRight.getText();
-                String cat=category.getSelectedItem().toString();
-                if(Questions.addquestions(level, cat, question, option1, option2, option3, right)) {
-                	JOptionPane.showMessageDialog(contentPane, "Added question to database","Success",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else {
-                	JOptionPane.showMessageDialog(contentPane, "Some error occured. Please try again","Error",JOptionPane.ERROR_MESSAGE);
-                }
-
-                dialog.dispose();
+            	if(txtQuestion.getText().isEmpty()||txtOption1.getText().isEmpty()||txtOption2.getText().isEmpty()||txtOption2.getText().isEmpty()||txtOption3.getText().isEmpty()||txtRight.getText().isEmpty()) {
+            		JOptionPane.showMessageDialog(contentPane, "Please fill the fields","Empty fields",JOptionPane.ERROR_MESSAGE);
+            	}
+            	else {
+            		String level = cmbLevel.getSelectedItem().toString();
+            		String question = txtQuestion.getText();
+            		String option1 = txtOption1.getText();
+            		String option2 = txtOption2.getText();
+            		String option3 = txtOption3.getText();
+            		String right = txtRight.getText();
+            		String cat=category.getSelectedItem().toString();
+            		if(Questions.addquestions(level, cat, question, option1, option2, option3, right)) {
+            			JOptionPane.showMessageDialog(contentPane, "Added question to database","Success",JOptionPane.INFORMATION_MESSAGE);
+            			dialog.dispose();
+            		}
+            		else {
+            			JOptionPane.showMessageDialog(contentPane, "Some error occured. Please try again","Error",JOptionPane.ERROR_MESSAGE);
+            		}
+            		
+            	}
             }
         });
 
@@ -239,15 +249,14 @@ public class AdminDashboard extends JFrame {
     					int response=JOptionPane.showConfirmDialog(contentPane, "Delete Question "+id+"?","Delete Question",JOptionPane.YES_NO_OPTION);
     					if(response==JOptionPane.YES_OPTION) {
     						Questions.deletequestions(id);
-    						JOptionPane.showMessageDialog(contentPane, "Deleted question from database","Success",JOptionPane.INFORMATION_MESSAGE);    					
+    						JOptionPane.showMessageDialog(contentPane, "Deleted question from database","Success",JOptionPane.INFORMATION_MESSAGE);  
+    						dialog.dispose();
     					}
     				}
     				else {
     					JOptionPane.showMessageDialog(contentPane, "Question of ID "+id+" doesnot exist","Error",JOptionPane.ERROR_MESSAGE);
     				}    				
     			}
-    			
-    			dialog.dispose();
     		}
     	});
     	
@@ -257,5 +266,76 @@ public class AdminDashboard extends JFrame {
     	
     	dialog.setLocationRelativeTo(this);
     	dialog.setVisible(true);
+    }
+    
+	 // Method to Show Update Question Popup
+    private void showUpdateQuestionDialog() {
+        JDialog dialog = new JDialog(this, "Update Question", true);
+        dialog.setSize(400, 350);
+        dialog.getContentPane().setLayout(new GridLayout(9, 2, 5, 5)); //new GridLayout(rows, columns, hGap, vGap)
+
+        JLabel lblID = new JLabel("Question ID:");
+        JTextField ID = new JTextField();
+        
+        JLabel lblLevel = new JLabel("Level:");
+        String[] levels = {"Beginner", "Intermediate", "Advanced"};
+        JComboBox<String> cmbLevel = new JComboBox<>(levels);
+
+        JLabel lblCategory = new JLabel("Category:");
+        String[] categories = {"Sports", "History", "Java"};
+        JComboBox<String> category = new JComboBox<>(categories);
+
+        JLabel lblQuestion = new JLabel("Question:");
+        JTextField txtQuestion = new JTextField();
+        JLabel lblOption1 = new JLabel("Option 1:");
+        JTextField txtOption1 = new JTextField();
+        JLabel lblOption2 = new JLabel("Option 2:");
+        JTextField txtOption2 = new JTextField();
+        JLabel lblOption3 = new JLabel("Option 3:");
+        JTextField txtOption3 = new JTextField();
+        JLabel lblRight = new JLabel("Right Option:");
+        JTextField txtRight = new JTextField();
+
+        JButton btnSave = new JButton("Save");
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String level = cmbLevel.getSelectedItem().toString();
+                String question = txtQuestion.getText();
+                String option1 = txtOption1.getText();
+                String option2 = txtOption2.getText();
+                String option3 = txtOption3.getText();
+                String right = txtRight.getText();
+                String cat=category.getSelectedItem().toString();
+                if(Questions.addquestions(level, cat, question, option1, option2, option3, right)) {
+                	JOptionPane.showMessageDialog(contentPane, "Added question to database","Success",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else {
+                	JOptionPane.showMessageDialog(contentPane, "Some error occured. Please try again","Error",JOptionPane.ERROR_MESSAGE);
+                }
+
+                dialog.dispose();
+            }
+        });
+
+        dialog.getContentPane().add(lblID);
+        dialog.getContentPane().add(ID);
+        dialog.getContentPane().add(lblLevel);
+        dialog.getContentPane().add(cmbLevel);
+        dialog.getContentPane().add(lblCategory);
+        dialog.getContentPane().add(category);
+        dialog.getContentPane().add(lblQuestion);
+        dialog.getContentPane().add(txtQuestion);
+        dialog.getContentPane().add(lblOption1);
+        dialog.getContentPane().add(txtOption1);
+        dialog.getContentPane().add(lblOption2);
+        dialog.getContentPane().add(txtOption2);
+        dialog.getContentPane().add(lblOption3);
+        dialog.getContentPane().add(txtOption3);
+        dialog.getContentPane().add(lblRight);
+        dialog.getContentPane().add(txtRight);
+        dialog.getContentPane().add(btnSave);
+
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 }
