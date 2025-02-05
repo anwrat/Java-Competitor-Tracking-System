@@ -25,12 +25,12 @@ public class AdminDashboard {
 			System.out.println("1.Add Questions");
 			System.out.println("2.Delete Questions");
 			System.out.println("3.Update Questions");
-			System.out.println("4.View Questions by category");
+			System.out.println("4.View Questions by Difficulty");
 			System.out.println("5.View Player Reports");
 			System.out.println("6.LogOut");
 			String choice;
 			while(true) {
-				System.out.println("Enter your choice(1/2/3/4/5/6:");
+				System.out.println("Enter your choice(1/2/3/4/5/6):");
 				choice=obj.next();
 				if(choice.equals("1")||choice.equals("2")||choice.equals("3")||choice.equals("4")||choice.equals("5")||choice.equals("6")) {
 					break;
@@ -50,18 +50,18 @@ public class AdminDashboard {
 				
 			}
 			else if(choice.equals("4")) {
-				String category;
+				String level;
 				while(true) {
-					System.out.println("1.Sports\n2.History\n3.Java");
-					System.out.println("Choose a category(1/2/3):");
-					category=obj.next();
-					if(category.equals("1")||category.equals("2")||category.equals("3")) {
-						if (category.equals("1")) {
-						    category = "Sports";
-						} else if (category.equals("2")) {
-						    category = "History";
-						} else if (category.equals("3")) {
-						    category = "Java";
+					System.out.println("1.Beginner\n2.Intermediate\n3.Advanced");
+					System.out.println("Choose a level(1/2/3):");
+					level=obj.next();
+					if(level.equals("1")||level.equals("2")||level.equals("3")) {
+						if (level.equals("1")) {
+						    level = "Beginner";
+						} else if (level.equals("2")) {
+						    level = "Intermediate";
+						} else if (level.equals("3")) {
+						    level = "Advanced";
 						}
 						break;
 					}
@@ -69,7 +69,7 @@ public class AdminDashboard {
 						System.out.println("Invalid level choice. Please choose again");
 					}
 				}
-				q.viewbycategory(category);
+				q.viewbylevel(level);
 			}
 			else if(choice.equals("5")) {
 				CompetitorList c=new CompetitorList();
