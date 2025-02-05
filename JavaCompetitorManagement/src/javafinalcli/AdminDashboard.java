@@ -40,12 +40,22 @@ public class AdminDashboard {
 				}
 			}
 			Question q=new Question();
+			//For adding question
 			if(choice.equals("1")) {
 				q.addquestions();
 			}
+			//For Deleting question
 			else if(choice.equals("2")) {
-				
+				System.out.println("Enter the ID of question to delete: ");
+				int id=obj.nextInt();
+				if(q.searchbyID(id)) {
+					q.deletequestions(id);
+				}
+				else {
+					System.out.println("No Questions found of ID: "+id);
+				}
 			}
+			//For Updating question
 			else if(choice.equals("3")) {
 				System.out.println("Enter the ID of question to update: ");
 				int id=obj.nextInt();
@@ -56,6 +66,7 @@ public class AdminDashboard {
 					System.out.println("No Questions found of ID: "+id);
 				}
 			}
+			//For viewing questions by level
 			else if(choice.equals("4")) {
 				String level;
 				while(true) {
@@ -78,10 +89,12 @@ public class AdminDashboard {
 				}
 				q.viewbylevel(level);
 			}
+			//For viewing player report
 			else if(choice.equals("5")) {
 				CompetitorList c=new CompetitorList();
 				c.getAllplayers();
 			}
+			//For logging out
 			else if(choice.equals("6")) {
 				break;
 			}

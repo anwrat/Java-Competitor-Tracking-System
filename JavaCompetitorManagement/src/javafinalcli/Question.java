@@ -88,8 +88,22 @@ public class Question {
         }
     }
     //For Deleting Questions
-    public void deletequestions() {
-    	
+    public void deletequestions(int id) {
+    	String query="DELETE from questions where QuestionID=?";
+        try {
+            // make a connection
+            Connection conn = DriverManager.getConnection(durl,username,password);
+            PreparedStatement pstm=conn.prepareStatement(query);//For dynamic allocation use PreparedStatement
+            pstm.setInt(1,id);
+            pstm.executeUpdate();
+            System.out.println("Deleted question successfully!!");
+            pstm.close();
+            conn.close();
+        }
+        catch(SQLException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
     }
     //For Updating Questions
     public void updatequestions(int id) {
