@@ -88,6 +88,11 @@ public class AdminDashboard extends JFrame {
 		contentPane.add(btnAddQuestions);
 		
 		JButton btnDeleteQuestions = new JButton("Delete Questions");
+		btnDeleteQuestions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showDeleteQuestionDialog();
+			}
+		});
 		btnDeleteQuestions.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnDeleteQuestions.setBackground(new Color(0, 128, 0));
 		btnDeleteQuestions.setBounds(52, 220, 188, 34);
@@ -175,5 +180,45 @@ public class AdminDashboard extends JFrame {
 
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+    }
+    //Dialog for DeleteQuestion
+    private void showDeleteQuestionDialog() {
+    	JDialog dialog = new JDialog(this, "Delete Question", true);
+    	dialog.setSize(300, 150);
+    	dialog.getContentPane().setLayout(new GridLayout(2, 2, 2, 2)); //new GridLayout(rows, columns, hGap, vGap)
+    	
+    	JLabel lblID = new JLabel("Question ID:");
+    	JTextField qnid = new JTextField();
+    	
+    	JButton btnDelete = new JButton("Delete");
+    	btnDelete.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			if(qnid.getText().isEmpty()) {
+    				JOptionPane.showMessageDialog(contentPane, "Please fill the fields","Empty fields",JOptionPane.ERROR_MESSAGE);
+    			}
+    			else {
+    				int id=Integer.parseInt(qnid.getText());
+    				if(Questions.searchbyID(id)) {
+    					int response=JOptionPane.showConfirmDialog(contentPane, "Delete Question "+id+"?","Delete Question",JOptionPane.YES_NO_OPTION);
+    					if(response==JOptionPane.YES_OPTION) {
+    						Questions.deletequestions(id);
+    						JOptionPane.showMessageDialog(contentPane, "Deleted question from database","Success",JOptionPane.INFORMATION_MESSAGE);    					
+    					}
+    				}
+    				else {
+    					JOptionPane.showMessageDialog(contentPane, "Question of ID "+id+" doesnot exist","Error",JOptionPane.ERROR_MESSAGE);
+    				}    				
+    			}
+    			
+    			dialog.dispose();
+    		}
+    	});
+    	
+    	dialog.getContentPane().add(lblID);
+    	dialog.getContentPane().add(qnid);
+    	dialog.getContentPane().add(btnDelete);
+    	
+    	dialog.setLocationRelativeTo(this);
+    	dialog.setVisible(true);
     }
 }

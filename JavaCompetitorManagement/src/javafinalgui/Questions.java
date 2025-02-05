@@ -42,7 +42,7 @@ public class Questions {
         }
     }
     //For Deleting Questions
-    public void deletequestions(int id) {
+    public static void deletequestions(int id) {
     	String query="DELETE from questions where QuestionID=?";
         try {
             // make a connection
@@ -50,7 +50,6 @@ public class Questions {
             PreparedStatement pstm=conn.prepareStatement(query);//For dynamic allocation use PreparedStatement
             pstm.setInt(1,id);
             pstm.executeUpdate();
-            System.out.println("Deleted question successfully!!");
             pstm.close();
             conn.close();
         }
@@ -165,7 +164,7 @@ public class Questions {
         }
     }
     //For searching questions by ID
-    public boolean searchbyID(int id) {
+    public static boolean searchbyID(int id) {
 	    String query = "SELECT * FROM questions WHERE QuestionID = ?";
 
 	    try (Connection conn = DriverManager.getConnection(durl, username, password);
