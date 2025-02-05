@@ -50,7 +50,26 @@ public class AdminDashboard {
 				
 			}
 			else if(choice.equals("4")) {
-				
+				String category;
+				while(true) {
+					System.out.println("1.Sports\n2.History\n3.Java");
+					System.out.println("Choose a category(1/2/3):");
+					category=obj.next();
+					if(category.equals("1")||category.equals("2")||category.equals("3")) {
+						if (category.equals("1")) {
+						    category = "Sports";
+						} else if (category.equals("2")) {
+						    category = "History";
+						} else if (category.equals("3")) {
+						    category = "Java";
+						}
+						break;
+					}
+					else {
+						System.out.println("Invalid level choice. Please choose again");
+					}
+				}
+				q.viewbycategory(category);
 			}
 			else if(choice.equals("5")) {
 				CompetitorList c=new CompetitorList();

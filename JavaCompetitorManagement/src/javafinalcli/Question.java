@@ -2,7 +2,9 @@ package javafinalcli;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class Question {
@@ -34,7 +36,7 @@ public class Question {
 		}
 		while(true) {
 			System.out.println("1.Sports\n2.History\n3.Java");
-			System.out.println("Choose a level(1/2/3):");
+			System.out.println("Choose a category(1/2/3):");
 			category=obj.next();
 			if(category.equals("1")||category.equals("2")||category.equals("3")) {
 				if (category.equals("1")) {
@@ -91,6 +93,33 @@ public class Question {
     	
     }
     public void viewbycategory(String category) {
-    	
+        String query = "select * from questions where category=category";
+        
+        try {
+            // make a connection
+            Connection conn = DriverManager.getConnection(durl,username,password);
+            
+            // create a statement
+            Statement stm = conn.createStatement();
+            ResultSet rs=stm.executeQuery(query);
+            while(rs.next()) {
+            	int id=rs.getInt("QuestionID");
+            	String q=rs.getString("Question");
+            	String a=rs.getString("Answer");
+            	String l=rs.getString("Level");
+            	String c=rs.getString("category");
+            	System.out.println("ID: "+id);
+            	System.out.println(q);
+            	System.out.println("Answer: "+a);
+            	System.out.println("Level: "+l);
+            	System.out.println("Category: "+c);
+            }
+            //Connection close
+            conn.close();
+        }
+        catch(SQLException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
     }
 }
