@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -20,11 +21,16 @@ import javax.swing.JDialog;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class AdminDashboard extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JTable table;
+	private DefaultTableModel model;
 
 	/**
 	 * Launch the application.
@@ -47,7 +53,7 @@ public class AdminDashboard extends JFrame {
 	 */
 	public AdminDashboard() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 755, 477);
+		setBounds(100, 100, 813, 626);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -76,10 +82,17 @@ public class AdminDashboard extends JFrame {
 		Logout.setBounds(589, 33, 107, 34);
 		contentPane.add(Logout);
 		
+		JComboBox showlevelbox = new JComboBox();
+		showlevelbox.setFont(new Font("Tahoma", Font.BOLD, 15));
+		showlevelbox.setModel(new DefaultComboBoxModel(new String[] {"Beginner", "Intermediate", "Advanced"}));
+		showlevelbox.setBounds(502, 134, 156, 34);
+		
 		JButton btnAddQuestions = new JButton("Add Questions");
 		btnAddQuestions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showAddQuestionDialog();
+				String level=showlevelbox.getSelectedItem().toString();
+				Questions.viewbylevel(model, level);
 			}
 		});
 		btnAddQuestions.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -91,6 +104,8 @@ public class AdminDashboard extends JFrame {
 		btnDeleteQuestions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showDeleteQuestionDialog();
+				String level=showlevelbox.getSelectedItem().toString();
+				Questions.viewbylevel(model, level);
 			}
 		});
 		btnDeleteQuestions.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -104,17 +119,39 @@ public class AdminDashboard extends JFrame {
 		btnUpdateQuestions.setBounds(52, 272, 188, 34);
 		contentPane.add(btnUpdateQuestions);
 		
+
+		contentPane.add(showlevelbox);
 		JButton btnShowQuestions = new JButton("Show Questions");
-		btnShowQuestions.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnShowQuestions.setBackground(new Color(0, 128, 0));
-		btnShowQuestions.setBounds(52, 326, 188, 34);
-		contentPane.add(btnShowQuestions);
 		
 		JButton btnShowPlayerReports = new JButton("Show Player Reports");
 		btnShowPlayerReports.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnShowPlayerReports.setBackground(new Color(0, 128, 0));
-		btnShowPlayerReports.setBounds(299, 220, 216, 34);
+		btnShowPlayerReports.setBounds(52, 329, 216, 34);
 		contentPane.add(btnShowPlayerReports);
+		
+		
+		JScrollPane Detailstable = new JScrollPane();
+		Detailstable.setBounds(428, 265, 361, 313);
+		contentPane.add(Detailstable);
+		
+		table = new JTable();
+		model = new DefaultTableModel();
+		model.addColumn("ID");
+		model.addColumn("Category");
+		model.addColumn("Question");
+		model.addColumn("Answer");
+		table.setModel(model);
+		Detailstable.setViewportView(table);
+		btnShowQuestions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String level=showlevelbox.getSelectedItem().toString();
+				Questions.viewbylevel(model, level);
+			}
+		});
+		btnShowQuestions.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnShowQuestions.setBackground(new Color(0, 128, 0));
+		btnShowQuestions.setBounds(502, 191, 188, 34);
+		contentPane.add(btnShowQuestions);
 	}
 	 // Method to Show Add Question Popup
     private void showAddQuestionDialog() {

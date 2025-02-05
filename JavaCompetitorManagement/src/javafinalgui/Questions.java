@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import javax.swing.table.DefaultTableModel;
+
 public class Questions {
 	Scanner obj=new Scanner(System.in);
     static String url = "jdbc:mysql://localhost:3306/";
@@ -132,10 +134,13 @@ public class Questions {
         }
     }
     //For viewing questions by level
-    public void viewbylevel(String level) {
+    public static void viewbylevel(DefaultTableModel m,String level) {
         String query = "select * from questions where Level=?";
         
         try {
+        	while(m.getRowCount()>0) {
+        		m.removeRow(0);
+        	}
             // make a connection
             Connection conn = DriverManager.getConnection(durl,username,password);
             
@@ -148,10 +153,7 @@ public class Questions {
             	String q=rs.getString("Question");
             	String a=rs.getString("Answer");
             	String c=rs.getString("category");
-            	System.out.println("ID: "+id);
-            	System.out.println(q);
-            	System.out.println("Answer: "+a);
-            	System.out.println("Category: "+c);
+            	m.addRow(new Object[] {id,c,q,a,});
             }
             rs.close();
             pstm.close();
