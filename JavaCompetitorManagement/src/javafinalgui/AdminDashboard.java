@@ -20,6 +20,7 @@ import javax.swing.JDialog;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
@@ -91,6 +92,7 @@ public class AdminDashboard extends JFrame {
 		btnAddQuestions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showAddQuestionDialog();
+				//For refreshing the table
 				String level=showlevelbox.getSelectedItem().toString();
 				Questions.viewbylevel(model, level);
 			}
@@ -104,6 +106,7 @@ public class AdminDashboard extends JFrame {
 		btnDeleteQuestions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showDeleteQuestionDialog();
+				//For refreshing the table
 				String level=showlevelbox.getSelectedItem().toString();
 				Questions.viewbylevel(model, level);
 			}
@@ -116,7 +119,10 @@ public class AdminDashboard extends JFrame {
 		JButton btnUpdateQuestions = new JButton("Update Questions");
 		btnUpdateQuestions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				showUpdateQuestionDialog();
+				//For refreshing the table
+				String level=showlevelbox.getSelectedItem().toString();
+				Questions.viewbylevel(model, level);
 			}
 		});
 		btnUpdateQuestions.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -299,21 +305,29 @@ public class AdminDashboard extends JFrame {
         JButton btnSave = new JButton("Save");
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String level = cmbLevel.getSelectedItem().toString();
-                String question = txtQuestion.getText();
-                String option1 = txtOption1.getText();
-                String option2 = txtOption2.getText();
-                String option3 = txtOption3.getText();
-                String right = txtRight.getText();
-                String cat=category.getSelectedItem().toString();
-                if(Questions.addquestions(level, cat, question, option1, option2, option3, right)) {
-                	JOptionPane.showMessageDialog(contentPane, "Added question to database","Success",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else {
-                	JOptionPane.showMessageDialog(contentPane, "Some error occured. Please try again","Error",JOptionPane.ERROR_MESSAGE);
-                }
-
-                dialog.dispose();
+            	if(ID.getText().isEmpty()) {
+            		JOptionPane.showMessageDialog(contentPane, "Please enter the question ID","Error",JOptionPane.ERROR_MESSAGE);
+            	}
+            	else {
+            		int id=Integer.parseInt(ID.getText());
+            		String level = cmbLevel.getSelectedItem().toString();
+            		String cat=category.getSelectedItem().toString();
+            		if(Questions.searchbyID(id)) {
+            			ArrayList<String> a=Questions.getqndetails(id);
+            			//If empty assigning the original values from database
+            			String question = txtQuestion.getText().isEmpty() ?a.get(0) : txtQuestion.getText();
+            			String option1 = txtOption1.getText().isEmpty()?a.get(1):txtOption1.getText();
+            			String option2 = txtOption2.getText().isEmpty()?a.get(2):txtOption2.getText();
+            			String option3 = txtOption3.getText().isEmpty()?a.get(3):txtOption3.getText();
+            			String right = txtRight.getText().isEmpty()?a.get(4):txtRight.getText();
+            			Questions.updatequestions(id, question, option1,option2, option3, right, level,cat);
+            			JOptionPane.showMessageDialog(contentPane, "Question "+id+" updated succesfully","Update Success",JOptionPane.INFORMATION_MESSAGE);
+            			dialog.dispose();
+            		}
+            		else {
+            			JOptionPane.showMessageDialog(contentPane, "Question of ID: "+id+" doesnot exist","Error",JOptionPane.ERROR_MESSAGE);
+            		}        		
+            	}
             }
         });
 
