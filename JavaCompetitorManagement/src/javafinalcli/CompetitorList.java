@@ -25,6 +25,8 @@ public class CompetitorList {
             	int java=rs.getInt("Java");
             	System.out.println(id+", "+name+", "+level+", Sports:"+sports+", History:"+history+", Java:"+java);
             }
+            stm.close();
+            rs.close();
             //Connection close
             conn.close();
         }
