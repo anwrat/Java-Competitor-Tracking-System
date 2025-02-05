@@ -92,28 +92,29 @@ public class Question {
     public void updatequestions() {
     	
     }
-    public void viewbycategory(String category) {
-        String query = "select * from questions where category=category";
+    public void viewbylevel(String level) {
+        String query = "select * from questions where Level=?";
         
         try {
             // make a connection
             Connection conn = DriverManager.getConnection(durl,username,password);
             
             // create a statement
-            Statement stm = conn.createStatement();
-            ResultSet rs=stm.executeQuery(query);
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, level);
+            ResultSet rs=pstm.executeQuery();
             while(rs.next()) {
             	int id=rs.getInt("QuestionID");
             	String q=rs.getString("Question");
             	String a=rs.getString("Answer");
-            	String l=rs.getString("Level");
             	String c=rs.getString("category");
             	System.out.println("ID: "+id);
             	System.out.println(q);
             	System.out.println("Answer: "+a);
-            	System.out.println("Level: "+l);
             	System.out.println("Category: "+c);
             }
+            rs.close();
+            pstm.close();
             //Connection close
             conn.close();
         }
