@@ -79,18 +79,23 @@ public class AdminLoginPage extends JFrame {
 		JButton Login = new JButton("LogIn");
 		Login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String name=Name.getText();
-				String pass = new String(password.getPassword());//getpassword returns char array so converting to String
-				AdminLogin a=new AdminLogin();
-				if(a.login(name, pass)) {
-					JOptionPane.showMessageDialog(contentPane, "Login Successful","Success",JOptionPane.INFORMATION_MESSAGE);//contentPane parameters centers dialog box w.r.t the contentPane
-					JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(Login);
-			        currentFrame.setVisible(false); // Hide current frame
-			        AdminDashboard ad=new AdminDashboard();
-			        ad.setVisible(true);
+				if(Name.getText().isEmpty() || new String(password.getPassword()).isEmpty()) {
+					JOptionPane.showMessageDialog(contentPane, "Please fill the fields","Empty fields",JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					JOptionPane.showMessageDialog(contentPane, "Invalid Details","Error",JOptionPane.ERROR_MESSAGE);
+					String name=Name.getText();
+					String pass = new String(password.getPassword());//getpassword returns char array so converting to String
+					AdminLogin a=new AdminLogin();
+					if(a.login(name, pass)) {
+						JOptionPane.showMessageDialog(contentPane, "Login Successful","Success",JOptionPane.INFORMATION_MESSAGE);//contentPane parameters centers dialog box w.r.t the contentPane
+						JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(Login);
+						currentFrame.setVisible(false); // Hide current frame
+						AdminDashboard ad=new AdminDashboard();
+						ad.setVisible(true);
+					}
+					else {
+						JOptionPane.showMessageDialog(contentPane, "Invalid Details","Error",JOptionPane.ERROR_MESSAGE);
+					}					
 				}
 			}
 		});

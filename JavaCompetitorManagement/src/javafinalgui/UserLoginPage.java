@@ -95,23 +95,28 @@ public class UserLoginPage extends JFrame {
 		JButton btnNewButton_1 = new JButton("Proceed");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String username=name.getText();
-				String userlevel=level.getSelectedItem().toString();
-				UserLogin login=new UserLogin();
-				UserDashboard ud=new UserDashboard();
-				if(login.login(username, userlevel)) {
-					JOptionPane.showMessageDialog(contentPane, "Login Successful");
-					JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(btnNewButton);
-					currentFrame.setVisible(false); // Hide current frame
-					ud.setVisible(true);
+				if(name.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(contentPane, "Please fill the fields","Empty fields",JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					UserRegister register = new UserRegister();
-					register.signup(username, userlevel);
-					JOptionPane.showMessageDialog(contentPane, "Registration Successful");
-					JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(btnNewButton);
-					currentFrame.setVisible(false); // Hide current frame
-					ud.setVisible(true);
+					String username=name.getText();
+					String userlevel=level.getSelectedItem().toString();
+					UserLogin login=new UserLogin();
+					UserDashboard ud=new UserDashboard();
+					if(login.login(username, userlevel)) {
+						JOptionPane.showMessageDialog(contentPane, "Login Successful");
+						JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(btnNewButton);
+						currentFrame.setVisible(false); // Hide current frame
+						ud.setVisible(true);
+					}
+					else {
+						UserRegister register = new UserRegister();
+						register.signup(username, userlevel);
+						JOptionPane.showMessageDialog(contentPane, "Registration Successful");
+						JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(btnNewButton);
+						currentFrame.setVisible(false); // Hide current frame
+						ud.setVisible(true);
+					}					
 				}
 			}
 		});
