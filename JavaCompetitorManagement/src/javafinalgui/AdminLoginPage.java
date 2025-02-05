@@ -83,14 +83,14 @@ public class AdminLoginPage extends JFrame {
 				String pass = new String(password.getPassword());//getpassword returns char array so converting to String
 				AdminLogin a=new AdminLogin();
 				if(a.login(name, pass)) {
-					JOptionPane.showMessageDialog(contentPane, "Login Successful");//contentPane parameters centers dialog box w.r.t the contentPane
+					JOptionPane.showMessageDialog(contentPane, "Login Successful","Success",JOptionPane.INFORMATION_MESSAGE);//contentPane parameters centers dialog box w.r.t the contentPane
 					JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(Login);
 			        currentFrame.setVisible(false); // Hide current frame
 			        AdminDashboard ad=new AdminDashboard();
 			        ad.setVisible(true);
 				}
 				else {
-					JOptionPane.showMessageDialog(contentPane, "Invalid Details");
+					JOptionPane.showMessageDialog(contentPane, "Invalid Details","Error",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
