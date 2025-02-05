@@ -2,7 +2,7 @@ package javafinalcli;
 import java.sql.*;
 
 public class AdminLogin {
-	public static boolean login(String name, String pass) {
+	public boolean login(String name, String pass) {
 	    String url = "jdbc:mysql://localhost:3306/";
 	    String username = "root";
 	    String password = "Root#123";
