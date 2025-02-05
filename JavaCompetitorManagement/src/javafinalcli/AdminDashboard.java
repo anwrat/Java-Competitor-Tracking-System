@@ -47,7 +47,14 @@ public class AdminDashboard {
 				
 			}
 			else if(choice.equals("3")) {
-				
+				System.out.println("Enter the ID of question to update: ");
+				int id=obj.nextInt();
+				if(q.searchbyID(id)) {
+					q.updatequestions(id);
+				}
+				else {
+					System.out.println("No Questions found of ID: "+id);
+				}
 			}
 			else if(choice.equals("4")) {
 				String level;
