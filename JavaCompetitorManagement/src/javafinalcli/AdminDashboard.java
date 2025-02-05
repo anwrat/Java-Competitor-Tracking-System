@@ -21,7 +21,7 @@ public class AdminDashboard {
 	}
 	public void admindashboard() {
 		while(true) {
-			System.out.println("ADMIN DASHBOARD");
+			System.out.println("\n\nADMIN DASHBOARD");
 			System.out.println("1.Add Questions");
 			System.out.println("2.Delete Questions");
 			System.out.println("3.Update Questions");
@@ -39,8 +39,9 @@ public class AdminDashboard {
 					System.out.println("Invalid choice.");
 				}
 			}
+			Question q=new Question();
 			if(choice.equals("1")) {
-				
+				q.addquestions();
 			}
 			else if(choice.equals("2")) {
 				

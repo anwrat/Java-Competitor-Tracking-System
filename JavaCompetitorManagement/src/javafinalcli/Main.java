@@ -5,7 +5,7 @@ public class Main {
 	public static void main(String[] args) {
 		while(true) {
 			Scanner obj=new Scanner(System.in);
-			System.out.println("--- Competitor Management System --");
+			System.out.println("\n\n--- Competitor Management System --");
 			System.out.println("1.User Login/Registration");
 			System.out.println("2.Admin Login");
 			System.out.println("3.Exit");
