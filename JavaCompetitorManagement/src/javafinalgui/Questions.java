@@ -86,11 +86,12 @@ public class Questions {
         }
     }
     //For getting original values of a question
-    public ArrayList<String> getqndetails(int id) {
+    public static ArrayList<String> getqndetails(int id) {
     	String getquery="select * from questions where QuestionID=?";
     	try {
     		Connection conn = DriverManager.getConnection(durl,username,password);
             PreparedStatement pstm1=conn.prepareStatement(getquery);//For getting original values
+            pstm1.setInt(1, id);
             ResultSet rs=pstm1.executeQuery();
             ArrayList<String> qns=new ArrayList<String>();
             while(rs.next()) {
