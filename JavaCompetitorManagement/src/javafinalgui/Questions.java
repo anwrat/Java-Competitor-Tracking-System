@@ -5,14 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.table.DefaultTableModel;
 
 public class Questions {
-	Scanner obj=new Scanner(System.in);
     static String url = "jdbc:mysql://localhost:3306/";
     static String username = "root";
     static String password = "Root#123";
@@ -169,6 +166,32 @@ public class Questions {
 	        e.printStackTrace();
 	        return false;  
 	    }
+    }
+    
+    //For getting question only
+    public static String getqn(int id) {
+    	String getquery="select * from questions where QuestionID=?";
+    	try {
+    		Connection conn = DriverManager.getConnection(durl,username,password);
+            PreparedStatement pstm1=conn.prepareStatement(getquery);//For getting original values
+            pstm1.setInt(1, id);
+            ResultSet rs=pstm1.executeQuery();
+            if(rs.next()) {
+            	String q=rs.getString("Question");   
+                rs.close();
+                pstm1.close();
+                return q;
+            }
+            else {
+            	rs.close();
+                pstm1.close();
+            	return null;
+            }
+    	}catch(SQLException e) {
+		  System.out.println(e);
+          e.printStackTrace();
+          return null;
+    	}
     }
 }
 

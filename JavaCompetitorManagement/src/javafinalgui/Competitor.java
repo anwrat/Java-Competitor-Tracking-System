@@ -5,12 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 import javax.swing.table.DefaultTableModel;
 
 public class Competitor {
-	Scanner obj=new Scanner(System.in);
     static String url = "jdbc:mysql://localhost:3306/";
     static String username = "root";
     static String password = "Root#123";
