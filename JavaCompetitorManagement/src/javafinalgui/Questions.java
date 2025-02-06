@@ -193,5 +193,30 @@ public class Questions {
           return null;
     	}
     }
+    //For getting category only
+    public static String getcat(int id) {
+    	String getquery="select * from questions where QuestionID=?";
+    	try {
+    		Connection conn = DriverManager.getConnection(durl,username,password);
+    		PreparedStatement pstm1=conn.prepareStatement(getquery);//For getting original values
+    		pstm1.setInt(1, id);
+    		ResultSet rs=pstm1.executeQuery();
+    		if(rs.next()) {
+    			String l=rs.getString("category");   
+    			rs.close();
+    			pstm1.close();
+    			return l;
+    		}
+    		else {
+    			rs.close();
+    			pstm1.close();
+    			return null;
+    		}
+    	}catch(SQLException e) {
+    		System.out.println(e);
+    		e.printStackTrace();
+    		return null;
+    	}
+    }
 }
 
