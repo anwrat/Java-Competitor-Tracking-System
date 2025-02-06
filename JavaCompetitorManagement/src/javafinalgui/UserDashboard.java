@@ -68,7 +68,7 @@ public class UserDashboard extends JFrame {
 		playbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(contentPane, "A total of 5 questions will be asked. If you leave in middle your progress won't be saved","Warning",JOptionPane.WARNING_MESSAGE);
-				PlayGamePage pg=new PlayGamePage(level);
+				PlayGamePage pg=new PlayGamePage(name,level);
 				pg.setVisible(true);
 			}
 		});

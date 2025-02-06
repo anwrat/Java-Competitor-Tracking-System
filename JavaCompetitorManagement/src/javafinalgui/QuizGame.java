@@ -73,4 +73,35 @@ public class QuizGame {
           return null;
     	}
     }
+    
+    //For checking correct answer
+    public static boolean checkans(int id,String ans) {
+    	String getquery="select * from questions where QuestionID=?";
+    	try {
+    		Connection conn = DriverManager.getConnection(durl,username,password);
+            PreparedStatement pstm1=conn.prepareStatement(getquery);//For getting original values
+            pstm1.setInt(1, id);
+            ResultSet rs=pstm1.executeQuery();
+            if(rs.next()) {
+            	String a=rs.getString("Answer");   
+                rs.close();
+                pstm1.close();
+                if(a.equals(ans)) {
+                	return true;
+                }
+                else {
+                	return false;
+                }
+            }
+            else {
+            	rs.close();
+                pstm1.close();
+            	return false;
+            }
+    	}catch(SQLException e) {
+		  System.out.println(e);
+          e.printStackTrace();
+          return false;
+    	}
+    }
 }
