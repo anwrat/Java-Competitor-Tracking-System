@@ -101,4 +101,26 @@ public class Reports {
             e.printStackTrace();
         }
     }
+    
+    //Get Total Players
+    public static int getTotalPlayers() {
+        String query = "SELECT COUNT(*) FROM userdetails";
+        int totalPlayers = 0;
+
+        try (Connection conn = DriverManager.getConnection(durl, username, password);
+             PreparedStatement pstm = conn.prepareStatement(query);
+             ResultSet rs = pstm.executeQuery()) {  
+
+            if (rs.next()) {  
+                totalPlayers = rs.getInt(1);  
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+
+        return totalPlayers; 
+    }
+
 }
