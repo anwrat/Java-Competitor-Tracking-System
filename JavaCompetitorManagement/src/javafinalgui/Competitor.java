@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Competitor class for getting score and user details
+ */
 public class Competitor {
     static String url = "jdbc:mysql://localhost:3306/";
     static String username = "root";
@@ -16,6 +19,12 @@ public class Competitor {
     static String dbname = "javacompetition";
     static String durl = url + dbname;
     
+    /**
+     * Method to show Competitor Details
+     * @param m DefaultTableModel to be filled by details
+     * @param name Name of Competitor
+     * @param level Level of Competitor
+     */
     public static void showuserdetails(DefaultTableModel m,String name,String level) {
         String query = "select * from userdetails where Name=? and level=?";
         
@@ -49,6 +58,12 @@ public class Competitor {
         }
     }
     
+    /**
+     * Method to get scores of 3 subjects for a user
+     * @param name Name of Competitor
+     * @param level Level of Competitor
+     * @return ArrayList of Integers with scores for 3 subjects
+     */
     //For getting scores
     public static ArrayList<Integer> getscore(String name, String level) {
     	String getquery="select * from userdetails where Name=? and level=?";
