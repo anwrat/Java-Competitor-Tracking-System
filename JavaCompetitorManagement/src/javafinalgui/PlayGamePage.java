@@ -51,7 +51,7 @@ public class PlayGamePage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PlayGamePage(String level) {
+	public PlayGamePage(String name,String level) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//This just disposes this quiz game not the user dashboard
 		setBounds(100, 100, 754, 673);
 		contentPane = new JPanel();
@@ -98,27 +98,38 @@ public class PlayGamePage extends JFrame {
 		g.add(o3);
 		g.add(o4);
 		
+		questionIDs=QuizGame.getrandomfiveids(level);
+		if (!questionIDs.isEmpty()) {
+			loadQuestion(0);
+		} else {
+			JOptionPane.showMessageDialog(this, "No questions available for this level!", "Error", JOptionPane.ERROR_MESSAGE);
+			dispose();
+		}
+
 		JButton submitbutton = new JButton("Submit");
 		submitbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		        if (!o1.isSelected() && !o2.isSelected() && !o3.isSelected() && !o4.isSelected()) {
-		            JOptionPane.showMessageDialog(null, "Please select an answer before submitting!", "Warning", JOptionPane.WARNING_MESSAGE);
-		        } else {
-		            nextQuestion(); // Move to the next question
-		        }
+				String buttonText = o1.isSelected() ? o1.getText() :
+                    o2.isSelected() ? o2.getText() :
+                    o3.isSelected() ? o3.getText() :
+                    o4.isSelected() ? o4.getText() : null;
+				if (buttonText == null) {
+				    JOptionPane.showMessageDialog(contentPane, "Please select an answer before submitting!", "Warning", JOptionPane.WARNING_MESSAGE);
+				} else {
+					if(QuizGame.checkans(questionIDs.get(currentQuestionIndex), buttonText)) {
+						JOptionPane.showMessageDialog(contentPane, "Correct Answer!", "Correct", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else {
+						JOptionPane.showMessageDialog(contentPane, "Incorrect Answer", "Incorrect", JOptionPane.ERROR_MESSAGE);
+					}
+				    nextQuestion(); // Move to the next question
+				}
 			}
 		});
 		submitbutton.setBackground(new Color(0, 128, 0));
 		submitbutton.setFont(new Font("Tahoma", Font.BOLD, 15));
 		submitbutton.setBounds(282, 529, 129, 41);
 		contentPane.add(submitbutton);
-		questionIDs=QuizGame.getrandomfiveids(level);
-		 if (!questionIDs.isEmpty()) {
-	            loadQuestion(0);
-        } else {
-            JOptionPane.showMessageDialog(this, "No questions available for this level!", "Error", JOptionPane.ERROR_MESSAGE);
-            dispose();
-        }
 	}
 	
     private void loadQuestion(int index) {
