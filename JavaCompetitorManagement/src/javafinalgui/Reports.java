@@ -3,6 +3,7 @@ package javafinalgui;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -60,6 +61,39 @@ public class Reports {
             pstm.setString(5, level);
             pstm.executeUpdate();
             pstm.close();
+            conn.close();
+        }
+        catch(SQLException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+    }
+    
+    //Get all user Reports
+    public static void getreports(DefaultTableModel m) {
+        String query = "select * from reports";
+        
+        try {
+        	while(m.getRowCount()>0) {
+        		m.removeRow(0);
+        	}
+            // make a connection
+            Connection conn = DriverManager.getConnection(durl,username,password);
+            
+            // create a statement
+            PreparedStatement pstm = conn.prepareStatement(query);
+            ResultSet rs=pstm.executeQuery();
+            while(rs.next()) {
+            	String date=rs.getString("DT");
+            	String n=rs.getString("Name");
+            	String l=rs.getString("level");
+            	int c=rs.getInt("correct");
+            	float s=rs.getFloat("score");
+            	m.addRow(new Object[] {date,n,l,c,s});
+            }
+            rs.close();
+            pstm.close();
+            //Connection close
             conn.close();
         }
         catch(SQLException e) {

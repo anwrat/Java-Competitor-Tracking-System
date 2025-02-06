@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -135,6 +136,11 @@ public class AdminDashboard extends JFrame {
 		JButton btnShowQuestions = new JButton("Show Questions");
 		
 		JButton btnShowPlayerReports = new JButton("Show Player Reports");
+		btnShowPlayerReports.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showUserReportsDialog();
+			}
+		});
 		btnShowPlayerReports.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnShowPlayerReports.setBackground(new Color(0, 128, 0));
 		btnShowPlayerReports.setBounds(52, 329, 216, 34);
@@ -163,6 +169,12 @@ public class AdminDashboard extends JFrame {
 		btnShowQuestions.setBackground(new Color(0, 128, 0));
 		btnShowQuestions.setBounds(502, 191, 188, 34);
 		contentPane.add(btnShowQuestions);
+		
+		JButton btnShowQuizStats = new JButton("Show Quiz Stats");
+		btnShowQuizStats.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnShowQuizStats.setBackground(new Color(0, 128, 0));
+		btnShowQuizStats.setBounds(52, 384, 216, 34);
+		contentPane.add(btnShowQuizStats);
 	}
 	 // Method to Show Add Question Popup
     private void showAddQuestionDialog() {
@@ -352,4 +364,29 @@ public class AdminDashboard extends JFrame {
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
     }
+    
+    //For showing all user reports
+	private void showUserReportsDialog() {
+	    JDialog dialog = new JDialog(this, "All User Reports", true);
+	    dialog.setSize(600, 200); 
+	    dialog.getContentPane().setLayout(new BorderLayout()); 
+
+	    
+	    DefaultTableModel model = new DefaultTableModel();
+	    model.addColumn("DateTime");
+	    model.addColumn("Name");
+	    model.addColumn("Level");
+	    model.addColumn("Correct");
+	    model.addColumn("Score");
+
+	    JTable table = new JTable(model);
+	    JScrollPane detailTable = new JScrollPane(table); 
+	    
+	    Reports.getreports(model);
+	    
+	    dialog.getContentPane().add(detailTable, BorderLayout.CENTER);
+
+	    dialog.setLocationRelativeTo(this);
+	    dialog.setVisible(true);
+	}
 }
