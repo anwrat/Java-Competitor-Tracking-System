@@ -117,7 +117,7 @@ public class UserDashboard extends JFrame {
 	    dialog.setSize(600, 200); 
 	    dialog.getContentPane().setLayout(new BorderLayout()); 
 
-	    // ✅ Create the table model
+	    
 	    DefaultTableModel model = new DefaultTableModel();
 	    model.addColumn("ID");
 	    model.addColumn("Name");

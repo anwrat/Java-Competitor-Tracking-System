@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -46,5 +47,33 @@ public class Competitor {
             System.out.println(e);
             e.printStackTrace();
         }
+    }
+    
+    //For getting scores
+    public static ArrayList<Integer> getscore(String name, String level) {
+    	String getquery="select * from userdetails where Name=? and level=?";
+    	try {
+    		Connection conn = DriverManager.getConnection(durl,username,password);
+            PreparedStatement pstm1=conn.prepareStatement(getquery);//For getting original values
+            pstm1.setString(1,name);
+            pstm1.setString(2, level);
+            ResultSet rs=pstm1.executeQuery();
+            ArrayList<Integer> scores=new ArrayList<Integer>();
+            while(rs.next()) {
+            	int h=rs.getInt("History");
+            	int s=rs.getInt("Sports");
+            	int j=rs.getInt("Java");
+            	scores.add(h);
+            	scores.add(s);
+            	scores.add(j);
+            }
+            rs.close();
+            pstm1.close();
+            return scores;
+    	}catch(SQLException e) {
+		  System.out.println(e);
+          e.printStackTrace();
+          return null;
+    	}
     }
 }

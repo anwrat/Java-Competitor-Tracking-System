@@ -2,23 +2,34 @@ package javafinalgui;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import java.time.LocalDateTime; // Import the LocalDateTime class
+import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
 
 public class PlayGamePage extends JFrame {
 
@@ -31,6 +42,11 @@ public class PlayGamePage extends JFrame {
 	private ArrayList<Integer> questionIDs; // Stores shuffled question IDs
     private int currentQuestionIndex = 0; // Keeps track of the current question
     private int currentQuestionID; // Stores the current Question ID
+    private int correct=0;
+    private int hscore=0;
+    private int sscore=0;
+    private int jscore=0;
+    private String pname,plevel;
 
 	/**
 	 * Launch the application.
@@ -52,6 +68,8 @@ public class PlayGamePage extends JFrame {
 	 * Create the frame.
 	 */
 	public PlayGamePage(String name,String level) {
+		pname=name;
+		plevel=level;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//This just disposes this quiz game not the user dashboard
 		setBounds(100, 100, 754, 673);
 		contentPane = new JPanel();
@@ -116,7 +134,19 @@ public class PlayGamePage extends JFrame {
 				if (buttonText == null) {
 				    JOptionPane.showMessageDialog(contentPane, "Please select an answer before submitting!", "Warning", JOptionPane.WARNING_MESSAGE);
 				} else {
+					//Checking if answer is correct
 					if(QuizGame.checkans(questionIDs.get(currentQuestionIndex), buttonText)) {
+						correct++;
+						String category=Questions.getcat(questionIDs.get(currentQuestionIndex));
+						if(category.equals("History")) {
+							hscore++;
+						}
+						else if(category.equals("Sports")) {
+							sscore++;
+						}
+						else{
+							jscore++;
+						}
 						JOptionPane.showMessageDialog(contentPane, "Correct Answer!", "Correct", JOptionPane.INFORMATION_MESSAGE);
 					}
 					else {
@@ -156,8 +186,51 @@ public class PlayGamePage extends JFrame {
         if (currentQuestionIndex + 1 < questionIDs.size()) {
             loadQuestion(currentQuestionIndex + 1);
         } else {
+        	//Adding scores after end of quiz
+        	Reports.addscores(pname, plevel, hscore, sscore, jscore);
             JOptionPane.showMessageDialog(this, "Quiz Completed!", "Success", JOptionPane.INFORMATION_MESSAGE);
             dispose(); // Close the quiz window
+            createReportDialog();
         }
     }
+    
+    private void createReportDialog() {
+        JDialog dialog = new JDialog(this, "Report for " + pname, true);
+        dialog.setSize(400, 250); // Adjust size for better visibility
+        dialog.setLayout(new BorderLayout());
+
+        // Create panel with GridLayout for proper alignment
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 1, 5, 5)); // 5 rows, 1 column, with spacing
+
+        // Labels for displaying the report
+        JLabel lblName = new JLabel();
+        JLabel lblLevel = new JLabel();
+        JLabel lblDate = new JLabel();
+        JLabel lblCorrect = new JLabel();
+        JLabel lblScore = new JLabel();
+
+        // Format date
+        LocalDateTime myDateObj = LocalDateTime.now();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDate = myDateObj.format(myFormatObj);
+
+        // Fetch and display report data
+        Reports.generatereport(lblName, lblLevel, lblDate, lblCorrect, lblScore, formattedDate, pname, plevel, correct);
+
+        // Add labels to panel
+        panel.add(lblName);
+        panel.add(lblLevel);
+        panel.add(lblDate);
+        panel.add(lblCorrect);
+        panel.add(lblScore);
+
+        // Add panel to dialog
+        dialog.add(panel, BorderLayout.CENTER);
+
+        // Center and show dialog
+        dialog.setLocationRelativeTo(contentPane);
+        dialog.setVisible(true);
+    }
+
 }
