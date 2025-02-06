@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
@@ -78,6 +79,11 @@ public class UserDashboard extends JFrame {
 		contentPane.add(playbutton);
 		
 		JButton btnShowLeaderboard = new JButton("Show leaderboard");
+		btnShowLeaderboard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showLeaderBoardDialog();
+			}
+		});
 		btnShowLeaderboard.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnShowLeaderboard.setBackground(new Color(255, 128, 64));
 		btnShowLeaderboard.setBounds(271, 393, 202, 40);
@@ -132,6 +138,67 @@ public class UserDashboard extends JFrame {
 	    Competitor.showuserdetails(model, name, level);
 
 	    dialog.getContentPane().add(detailTable, BorderLayout.CENTER);
+
+	    dialog.setLocationRelativeTo(this);
+	    dialog.setVisible(true);
+	}
+	//Show leaderboard
+	private void showLeaderBoardDialog() {
+	    JDialog dialog = new JDialog(this, "Leaderboard", true);
+	    dialog.setSize(700, 500); // ✅ Increased size for better visibility
+	    dialog.setLayout(new BorderLayout());
+
+	    //Create main panel with vertical layout
+	    JPanel mainPanel = new JPanel();
+	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+	    //Beginner Leaderboard
+	    JLabel lblBeginner = new JLabel("Beginner Leaderboard");
+	    DefaultTableModel beginnerModel = new DefaultTableModel();
+	    beginnerModel.addColumn("Name");
+	    beginnerModel.addColumn("Sports");
+	    beginnerModel.addColumn("History");
+	    beginnerModel.addColumn("Java");
+
+	    JTable tableBeginner = new JTable(beginnerModel);
+	    JScrollPane scrollBeginner = new JScrollPane(tableBeginner);
+	    
+	    //Intermediate Leaderboard
+	    JLabel lblIntermediate = new JLabel("Intermediate Leaderboard");
+	    DefaultTableModel intermediateModel = new DefaultTableModel();
+	    intermediateModel.addColumn("Name");
+	    intermediateModel.addColumn("Sports");
+	    intermediateModel.addColumn("History");
+	    intermediateModel.addColumn("Java");
+
+	    JTable tableIntermediate = new JTable(intermediateModel);
+	    JScrollPane scrollIntermediate = new JScrollPane(tableIntermediate);
+	    
+	    //Advanced Leaderboard
+	    JLabel lblAdvanced = new JLabel("Advanced Leaderboard");
+	    DefaultTableModel advancedModel = new DefaultTableModel();
+	    advancedModel.addColumn("Name");
+	    advancedModel.addColumn("Sports");
+	    advancedModel.addColumn("History");
+	    advancedModel.addColumn("Java");
+
+	    JTable tableAdvanced = new JTable(advancedModel);
+	    JScrollPane scrollAdvanced = new JScrollPane(tableAdvanced);
+
+	    Reports.populateLeaderboard(beginnerModel, "Beginner");
+	    Reports.populateLeaderboard(intermediateModel, "Intermediate");
+	    Reports.populateLeaderboard(advancedModel, "Advanced");
+
+	    mainPanel.add(lblBeginner);
+	    mainPanel.add(scrollBeginner);
+	    mainPanel.add(lblIntermediate);
+	    mainPanel.add(scrollIntermediate);
+	    mainPanel.add(lblAdvanced);
+	    mainPanel.add(scrollAdvanced);
+
+	    //Make entire dialog scrollable
+	    JScrollPane mainScrollPane = new JScrollPane(mainPanel);
+	    dialog.add(mainScrollPane, BorderLayout.CENTER);
 
 	    dialog.setLocationRelativeTo(this);
 	    dialog.setVisible(true);
