@@ -19,6 +19,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -64,6 +65,13 @@ public class UserDashboard extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton playbutton = new JButton("Play Quiz");
+		playbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(contentPane, "A total of 5 questions will be asked. If you leave in middle your progress won't be saved","Warning",JOptionPane.WARNING_MESSAGE);
+				PlayGamePage pg=new PlayGamePage(level);
+				pg.setVisible(true);
+			}
+		});
 		playbutton.setBackground(new Color(0, 128, 0));
 		playbutton.setFont(new Font("Source Code Pro", Font.BOLD, 30));
 		playbutton.setBounds(257, 212, 249, 101);
@@ -104,29 +112,29 @@ public class UserDashboard extends JFrame {
 		contentPane.add(btnNewButton);
 	}
 	
-    private void showUserDetailsDialog(String name,String level) {
-    	JDialog dialog = new JDialog(this, "Details for "+name, true);
-    	dialog.setSize(300, 150);
-    	dialog.getContentPane().setLayout(new GridLayout(2, 2, 2, 2)); //new GridLayout(rows, columns, hGap, vGap)
-    	
-		JScrollPane Detailstable = new JScrollPane();
-		Detailstable.setBounds(428, 265, 361, 313);
-    	
-		JTable table = new JTable();
-		DefaultTableModel model = new DefaultTableModel();
-		model.addColumn("ID");
-		model.addColumn("Name");
-		model.addColumn("Level");
-		model.addColumn("Sports");
-		model.addColumn("History");
-		model.addColumn("Java");
-		table.setModel(model);
-		Detailstable.setViewportView(table);
-    	Competitor.showuserdetails(model, name,level);
-    	
-    	dialog.getContentPane().add(Detailstable);
-    	
-    	dialog.setLocationRelativeTo(this);
-    	dialog.setVisible(true);
-    }
+	private void showUserDetailsDialog(String name, String level) {
+	    JDialog dialog = new JDialog(this, "Details for " + name, true);
+	    dialog.setSize(600, 200); 
+	    dialog.getContentPane().setLayout(new BorderLayout()); 
+
+	    // ✅ Create the table model
+	    DefaultTableModel model = new DefaultTableModel();
+	    model.addColumn("ID");
+	    model.addColumn("Name");
+	    model.addColumn("Level");
+	    model.addColumn("Sports");
+	    model.addColumn("History");
+	    model.addColumn("Java");
+
+	    JTable table = new JTable(model);
+	    JScrollPane detailTable = new JScrollPane(table); 
+
+	    Competitor.showuserdetails(model, name, level);
+
+	    dialog.getContentPane().add(detailTable, BorderLayout.CENTER);
+
+	    dialog.setLocationRelativeTo(this);
+	    dialog.setVisible(true);
+	}
+
 }
