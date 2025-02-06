@@ -21,6 +21,8 @@ import javax.swing.JDialog;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
@@ -171,6 +173,11 @@ public class AdminDashboard extends JFrame {
 		contentPane.add(btnShowQuestions);
 		
 		JButton btnShowQuizStats = new JButton("Show Quiz Stats");
+		btnShowQuizStats.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnShowQuizStats.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnShowQuizStats.setBackground(new Color(0, 128, 0));
 		btnShowQuizStats.setBounds(52, 384, 216, 34);
@@ -389,4 +396,42 @@ public class AdminDashboard extends JFrame {
 	    dialog.setLocationRelativeTo(this);
 	    dialog.setVisible(true);
 	}
+	
+	//Get statistical report of the program
+    private void createReportDialog() {
+        JDialog dialog = new JDialog(this, "Statistical Report", true);
+        dialog.setSize(400, 250); // Adjust size for better visibility
+        dialog.setLayout(new BorderLayout());
+
+        // Create panel with GridLayout for proper alignment
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(7, 1, 5, 5)); // 5 rows, 1 column, with spacing
+
+        // Labels for displaying the report
+        JLabel tp = new JLabel();
+        JLabel hbeginner = new JLabel();
+        JLabel hintermediate = new JLabel();
+        JLabel hadvanced = new JLabel();
+        JLabel hsports = new JLabel();
+        JLabel hhistory = new JLabel();
+        JLabel hjava = new JLabel();
+        
+        tp.setText("Total Players: "+Reports.getTotalPlayers());
+
+        // Add labels to panel
+        panel.add(tp);
+        panel.add(hbeginner);
+        panel.add(hintermediate);
+        panel.add(hadvanced);
+        panel.add(hsports);
+        panel.add(hhistory);
+        panel.add(hjava);
+
+        // Add panel to dialog
+        dialog.add(panel, BorderLayout.CENTER);
+
+        // Center and show dialog
+        dialog.setLocationRelativeTo(contentPane);
+        dialog.setVisible(true);
+    }
 }
