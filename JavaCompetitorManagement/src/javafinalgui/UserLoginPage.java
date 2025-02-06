@@ -102,7 +102,7 @@ public class UserLoginPage extends JFrame {
 					String username=name.getText();
 					String userlevel=level.getSelectedItem().toString();
 					UserLogin login=new UserLogin();
-					UserDashboard ud=new UserDashboard();
+					UserDashboard ud=new UserDashboard(username,userlevel);
 					if(login.login(username, userlevel)) {
 						JOptionPane.showMessageDialog(contentPane, "Login Successful");
 						JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(btnNewButton);
