@@ -175,6 +175,29 @@ public class Reports {
 
         return result;
     }
+    
+    //Leaderboard
+    public static void populateLeaderboard(DefaultTableModel model, String level) {
+        String query = "SELECT Name, Sports, History, Java FROM userdetails WHERE Level = ? ORDER BY (Sports + History + Java) DESC";
+        
+        try (Connection conn = DriverManager.getConnection(durl, username, password);
+             PreparedStatement pstm = conn.prepareStatement(query)) {
+
+            pstm.setString(1, level);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                String name = rs.getString("Name");
+                int sports = rs.getInt("Sports");
+                int history = rs.getInt("History");
+                int java = rs.getInt("Java");
+
+                model.addRow(new Object[]{name, sports, history, java});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
