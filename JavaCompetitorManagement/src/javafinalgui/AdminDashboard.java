@@ -175,7 +175,7 @@ public class AdminDashboard extends JFrame {
 		JButton btnShowQuizStats = new JButton("Show Quiz Stats");
 		btnShowQuizStats.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				createReportDialog();
 			}
 		});
 		btnShowQuizStats.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -417,6 +417,12 @@ public class AdminDashboard extends JFrame {
         JLabel hjava = new JLabel();
         
         tp.setText("Total Players: "+Reports.getTotalPlayers());
+        hbeginner.setText(Reports.getHighestLevel("Beginner"));
+        hintermediate.setText(Reports.getHighestLevel("Intermediate"));
+        hadvanced.setText(Reports.getHighestLevel("Advanced"));
+        hsports.setText(Reports.getHighestSubject("Sports"));
+        hhistory.setText(Reports.getHighestSubject("History"));
+        hjava.setText(Reports.getHighestSubject("Java"));
 
         // Add labels to panel
         panel.add(tp);

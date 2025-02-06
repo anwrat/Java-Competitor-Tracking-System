@@ -122,5 +122,60 @@ public class Reports {
 
         return totalPlayers; 
     }
+    
+    //Get highest score player according to level
+    public static String getHighestLevel(String level) {
+        String query = "SELECT Name, (history + sports + java) AS total_score FROM userdetails WHERE Level = ? ORDER BY total_score DESC LIMIT 1";
+        String result = "No " + level + " players found";
+
+        try (Connection conn = DriverManager.getConnection(durl, username, password);
+             PreparedStatement pstm = conn.prepareStatement(query)) {
+
+            pstm.setString(1, level); 
+            try (ResultSet rs = pstm.executeQuery()) {
+                if (rs.next()) {
+                    String name = rs.getString("Name");
+                    int totalScore = rs.getInt("total_score");  
+                    result = "Best "+level+" player: "+name + " - " + totalScore;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    
+    //Get highest score for particular subjects
+    public static String getHighestSubject(String subject) {
+        if (!subject.equalsIgnoreCase("history") && 
+            !subject.equalsIgnoreCase("sports") && 
+            !subject.equalsIgnoreCase("java")) {
+            return "Invalid subject!";
+        }
+
+        String query = "SELECT Name, " + subject + " FROM userdetails ORDER BY " + subject + " DESC LIMIT 1";
+        String result = "No " + subject + " players found";
+
+        try (Connection conn = DriverManager.getConnection(durl, username, password);
+             PreparedStatement pstm = conn.prepareStatement(query);
+             ResultSet rs = pstm.executeQuery()) {
+
+            if (rs.next()) {
+                String name = rs.getString("Name");
+                int subjectScore = rs.getInt(subject); 
+                result = "Best "+subject+" player: "+ name + " - " + subjectScore;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+
 
 }
