@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Class containing methods related to questions database
+ */
 public class Questions {
     static String url = "jdbc:mysql://localhost:3306/";
     static String username = "root";
@@ -16,6 +19,17 @@ public class Questions {
     static String dbname = "javacompetition";
     static String durl = url + dbname;
     //For Adding questions
+    /**
+     * Add a question to database
+     * @param level Difficulty
+     * @param category Subject of question
+     * @param q Full Question
+     * @param o1 Option1 
+     * @param o2 Option2
+     * @param o3 Option3
+     * @param a Correct Answer
+     * @return if question was added successfully or not
+     */
     public static boolean addquestions(String level,String category,String q,String o1,String o2,String o3,String a) {
         String query = "Insert into questions(Question,A,B,C,Answer,Level,category)values(?,?,?,?,?,?,?)";
         
@@ -42,6 +56,10 @@ public class Questions {
         }
     }
     //For Deleting Questions
+    /**
+     * For deleting questions from database
+     * @param id ID of question
+     */
     public static void deletequestions(int id) {
     	String query="DELETE from questions where QuestionID=?";
         try {
@@ -59,6 +77,17 @@ public class Questions {
         }
     }
     //For Updating Questions
+    /**
+     * For updating question in database
+     * @param id Question ID
+     * @param q Full Question
+     * @param o1 Option1
+     * @param o2 Option2
+     * @param o3 Option3
+     * @param a Answer
+     * @param level Difficulty of Question
+     * @param category Subject of Question
+     */
     public static void updatequestions(int id,String q,String o1,String o2,String o3,String a,String level,String category) {
     	String query="Update questions SET Question=?,A=?,B=?,C=?,Answer=?,Level=?,category=? where QuestionID=?";
         try {
@@ -83,6 +112,11 @@ public class Questions {
         }
     }
     //For getting original values of a question
+    /**
+     * Get all details of question from database
+     * @param id ID of question
+     * @return All details in ArrayList
+     */
     public static ArrayList<String> getqndetails(int id) {
     	String getquery="select * from questions where QuestionID=?";
     	try {
@@ -117,6 +151,11 @@ public class Questions {
     	}
     }
     //For viewing questions by level
+    /**
+     * For viewing questions according to level
+     * @param m TableModel where questions are to be added
+     * @param level Difficulty of question
+     */
     public static void viewbylevel(DefaultTableModel m,String level) {
         String query = "select * from questions where Level=?";
         
@@ -149,6 +188,11 @@ public class Questions {
         }
     }
     //For searching questions by ID
+    /**
+     * To search a question by ID
+     * @param id ID of question
+     * @return question found or not
+     */
     public static boolean searchbyID(int id) {
 	    String query = "SELECT * FROM questions WHERE QuestionID = ?";
 
@@ -169,6 +213,11 @@ public class Questions {
     }
     
     //For getting question only
+    /**
+     * For getting question only
+     * @param id ID of question
+     * @return Question
+     */
     public static String getqn(int id) {
     	String getquery="select * from questions where QuestionID=?";
     	try {
@@ -194,6 +243,11 @@ public class Questions {
     	}
     }
     //For getting category only
+    /**
+     * For getting category of question
+     * @param id Question ID
+     * @return Category of question
+     */
     public static String getcat(int id) {
     	String getquery="select * from questions where QuestionID=?";
     	try {

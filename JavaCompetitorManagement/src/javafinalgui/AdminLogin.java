@@ -6,7 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class for checking Admin login
+ */
 public class AdminLogin {
+	/**
+	 * Check if login details are valid
+	 * @param name Name of admin
+	 * @param pass password for admin
+	 * @return if login was successful or not
+	 */
 	public boolean login(String name, String pass) {
 	    String url = "jdbc:mysql://localhost:3306/";
 	    String username = "root";

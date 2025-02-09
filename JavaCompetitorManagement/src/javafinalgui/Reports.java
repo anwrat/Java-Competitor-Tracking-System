@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Class related to generation of quizgame reports
+ */
 public class Reports {
     static String url = "jdbc:mysql://localhost:3306/";
     static String username = "root";
@@ -18,6 +21,18 @@ public class Reports {
     static String durl = url + dbname;
     
     //Generate Report
+    /**
+     * Method for adding reports to database and showing in JLabel
+     * @param lname JLabel for showing text
+     * @param llevel JLabel for showing text
+     * @param date JLabel for showing text
+     * @param c JLabel for showing text
+     * @param s JLabel for showing text
+     * @param dt Date and time of the quiz taken
+     * @param name Name of the player
+     * @param level Level of the player
+     * @param correct Number of correct answers
+     */
     public static void generatereport(JLabel lname,JLabel llevel,JLabel date,JLabel c,JLabel s,String dt,String name,String level,int correct) {
         String query = "Insert into reports(DT,Name,level,Correct,Score)values(?,?,?,?,?)";
         
@@ -47,6 +62,14 @@ public class Reports {
     }
     
     //Add scores to the user tables
+    /**
+     * Method to add to scores in userdetails table
+     * @param name Name of player
+     * @param level Level of player
+     * @param hscore History score of player
+     * @param sscore Sports score of player
+     * @param jscore Java score of player
+     */
     public static void addscores(String name,String level, int hscore,int sscore,int jscore) {
     	String query="Update userdetails SET Sports=?, History=?, Java=? where Name=? and level=?";
         try {
@@ -70,6 +93,10 @@ public class Reports {
     }
     
     //Get all user Reports
+    /**
+     * Method to get reports of all players
+     * @param m TableModel where the rows are to be added
+     */
     public static void getreports(DefaultTableModel m) {
         String query = "select * from reports";
         
@@ -103,6 +130,10 @@ public class Reports {
     }
     
     //Get Total Players
+    /**
+     * Method to get total number of players in the game
+     * @return total players
+     */
     public static int getTotalPlayers() {
         String query = "SELECT COUNT(*) FROM userdetails";
         int totalPlayers = 0;
@@ -124,6 +155,11 @@ public class Reports {
     }
     
     //Get highest score player according to level
+    /**
+     * Method to get highest total score for a certain level
+     * @param level Level of quiz taken
+     * @return Name and scores as string
+     */
     public static String getHighestLevel(String level) {
         String query = "SELECT Name, (history + sports + java) AS total_score FROM userdetails WHERE Level = ? ORDER BY total_score DESC LIMIT 1";
         String result = "No " + level + " players found";
@@ -148,6 +184,11 @@ public class Reports {
 
     
     //Get highest score for particular subjects
+    /**
+     * Method to get highest score for particular subjects
+     * @param subject Name of subject
+     * @return Name and score as a string
+     */
     public static String getHighestSubject(String subject) {
         if (!subject.equalsIgnoreCase("history") && 
             !subject.equalsIgnoreCase("sports") && 
@@ -177,6 +218,11 @@ public class Reports {
     }
     
     //Leaderboard
+    /**
+     * Method to populate TableModel of leaderboard
+     * @param model Leaderboard TableModel
+     * @param level Level of quiz taken
+     */
     public static void populateLeaderboard(DefaultTableModel model, String level) {
         String query = "SELECT Name, Sports, History, Java FROM userdetails WHERE Level = ? ORDER BY (Sports + History + Java) DESC";
         

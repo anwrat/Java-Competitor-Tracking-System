@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Class containing methods required for quiz game
+ */
 public class QuizGame {
     static String url = "jdbc:mysql://localhost:3306/";
     static String username = "root";
@@ -17,6 +20,11 @@ public class QuizGame {
     static String dbname = "javacompetition";
     static String durl = url + dbname;
     
+    /**
+     * Get random five IDs of question
+     * @param level Level of questions
+     * @return ArrayList of question IDs
+     */
     public static ArrayList<Integer> getrandomfiveids(String level) {
     	String getquery="select * from questions where level=?";
     	try {
@@ -43,6 +51,11 @@ public class QuizGame {
     	}
     }
     
+    /**
+     * Get shuffled options for a question
+     * @param id ID of question
+     * @return ArrayList of shuffled options
+     */
     public static ArrayList<String> getshuffledoptions(int id) {
     	String getquery="select * from questions where QuestionID=?";
     	try {
@@ -63,7 +76,7 @@ public class QuizGame {
             }
             rs.close();
             pstm1.close();
-            Collections.shuffle(options); // Shuffle the arraylist
+            Collections.shuffle(options); // Shuffle the Arraylist
 
             return options;
 
@@ -75,6 +88,12 @@ public class QuizGame {
     }
     
     //For checking correct answer
+    /**
+     * Method for checking if answer is correct
+     * @param id Question ID
+     * @param ans Answer given by user
+     * @return whether answer was correct or not
+     */
     public static boolean checkans(int id,String ans) {
     	String getquery="select * from questions where QuestionID=?";
     	try {

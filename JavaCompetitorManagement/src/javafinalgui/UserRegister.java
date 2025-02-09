@@ -5,7 +5,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Class for registering user
+ */
 public class UserRegister {
+	/**
+	 * Method for adding new user to database
+	 * @param name Name of user
+	 * @param level Level chosen by the user
+	 */
     public void signup(String name,String level) {
         String url = "jdbc:mysql://localhost:3306/";
         String username = "root";

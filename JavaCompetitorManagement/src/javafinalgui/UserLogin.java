@@ -6,7 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Login class to verify existence of user
+ */
 public class UserLogin {
+	/**
+	 * Method to check if user details match or not
+	 * @param name Name of user
+	 * @param level Level of user
+	 * @return boolean value if user exists or not
+	 */
 	public boolean login(String name, String level) {
 	    String url = "jdbc:mysql://localhost:3306/";
 	    String username = "root";
