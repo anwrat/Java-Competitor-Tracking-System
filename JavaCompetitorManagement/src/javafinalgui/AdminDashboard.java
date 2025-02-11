@@ -89,7 +89,7 @@ public class AdminDashboard extends JFrame {
 		JComboBox showlevelbox = new JComboBox();
 		showlevelbox.setFont(new Font("Tahoma", Font.BOLD, 15));
 		showlevelbox.setModel(new DefaultComboBoxModel(new String[] {"Beginner", "Intermediate", "Advanced"}));
-		showlevelbox.setBounds(502, 134, 156, 34);
+		showlevelbox.setBounds(559, 146, 156, 34);
 		
 		JButton btnAddQuestions = new JButton("Add Questions");
 		btnAddQuestions.addActionListener(new ActionListener() {
@@ -102,7 +102,7 @@ public class AdminDashboard extends JFrame {
 		});
 		btnAddQuestions.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnAddQuestions.setBackground(new Color(0, 128, 0));
-		btnAddQuestions.setBounds(52, 161, 156, 34);
+		btnAddQuestions.setBounds(559, 326, 156, 34);
 		contentPane.add(btnAddQuestions);
 		
 		JButton btnDeleteQuestions = new JButton("Delete Questions");
@@ -116,7 +116,7 @@ public class AdminDashboard extends JFrame {
 		});
 		btnDeleteQuestions.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnDeleteQuestions.setBackground(new Color(0, 128, 0));
-		btnDeleteQuestions.setBounds(52, 220, 188, 34);
+		btnDeleteQuestions.setBounds(559, 382, 188, 34);
 		contentPane.add(btnDeleteQuestions);
 		
 		JButton btnUpdateQuestions = new JButton("Update Questions");
@@ -130,7 +130,7 @@ public class AdminDashboard extends JFrame {
 		});
 		btnUpdateQuestions.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnUpdateQuestions.setBackground(new Color(0, 128, 0));
-		btnUpdateQuestions.setBounds(52, 272, 188, 34);
+		btnUpdateQuestions.setBounds(559, 435, 188, 34);
 		contentPane.add(btnUpdateQuestions);
 		
 
@@ -145,12 +145,12 @@ public class AdminDashboard extends JFrame {
 		});
 		btnShowPlayerReports.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnShowPlayerReports.setBackground(new Color(0, 128, 0));
-		btnShowPlayerReports.setBounds(52, 329, 216, 34);
+		btnShowPlayerReports.setBounds(139, 544, 216, 34);
 		contentPane.add(btnShowPlayerReports);
 		
 		
 		JScrollPane Detailstable = new JScrollPane();
-		Detailstable.setBounds(428, 265, 361, 313);
+		Detailstable.setBounds(10, 145, 482, 351);
 		contentPane.add(Detailstable);
 		
 		table = new JTable();
@@ -169,7 +169,7 @@ public class AdminDashboard extends JFrame {
 		});
 		btnShowQuestions.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnShowQuestions.setBackground(new Color(0, 128, 0));
-		btnShowQuestions.setBounds(502, 191, 188, 34);
+		btnShowQuestions.setBounds(559, 212, 188, 34);
 		contentPane.add(btnShowQuestions);
 		
 		JButton btnShowQuizStats = new JButton("Show Quiz Stats");
@@ -180,7 +180,7 @@ public class AdminDashboard extends JFrame {
 		});
 		btnShowQuizStats.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnShowQuizStats.setBackground(new Color(0, 128, 0));
-		btnShowQuizStats.setBounds(52, 384, 216, 34);
+		btnShowQuizStats.setBounds(573, 544, 216, 34);
 		contentPane.add(btnShowQuizStats);
 	}
 	 // Method to Show Add Question Popup
@@ -401,7 +401,7 @@ public class AdminDashboard extends JFrame {
     private void createReportDialog() {
         JDialog dialog = new JDialog(this, "Statistical Report", true);
         dialog.setSize(400, 250); // Adjust size for better visibility
-        dialog.setLayout(new BorderLayout());
+        dialog.getContentPane().setLayout(new BorderLayout());
 
         // Create panel with GridLayout for proper alignment
         JPanel panel = new JPanel();
@@ -434,7 +434,7 @@ public class AdminDashboard extends JFrame {
         panel.add(hjava);
 
         // Add panel to dialog
-        dialog.add(panel, BorderLayout.CENTER);
+        dialog.getContentPane().add(panel, BorderLayout.CENTER);
 
         // Center and show dialog
         dialog.setLocationRelativeTo(contentPane);
